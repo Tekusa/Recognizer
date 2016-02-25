@@ -55,34 +55,24 @@ public class Recognizer extends LinearLayout implements RecognitionListener {
 
     public Recognizer(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setViewAttributes(context, attrs);
         initializeViews(context);
+        setViewAttributes(context, attrs);
     }
 
     public Recognizer(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setViewAttributes(context, attrs);
         initializeViews(context);
+        setViewAttributes(context, attrs);
     }
 
     public void setApplyListener(RecognizerListener listener){
         listeners.add(listener);
     }
 
-    private void setViewAttributes ( Context context, AttributeSet attrs ) {
-        TypedArray a = context.getTheme().obtainStyledAttributes( attrs, R.styleable.Recognizer, 0, 0);
-
-        try {
-            Log.d("######", "Показ текста:" + String.valueOf( a.getBoolean(R.styleable.Recognizer_recognizerShowText, false) ));
-            Log.d("######", "Выравнивание текста:" + String.valueOf( a.getInteger(R.styleable.Recognizer_recognizerLabelPosition, 0) ));
-        } finally {
-            a.recycle();
-        }
-    }
-
     public void startRecognize () {
         startRecognize (lastStatus);
     }
+
     public void startRecognize ( String status ) {
 
         lastStatus = status;
@@ -185,6 +175,36 @@ public class Recognizer extends LinearLayout implements RecognitionListener {
             }
         };
         checkHandler.postDelayed(r, 300);
+    }
+
+    private void setViewAttributes ( Context context, AttributeSet attrs ) {
+        TypedArray a = context.getTheme().obtainStyledAttributes( attrs, R.styleable.Recognizer, 0, 0);
+
+        elementButtonRecord.setReadyText( getResources().getString( R.string.button_record ) );
+        elementButtonRecord.setWaitText( getResources().getString( R.string.button_record_wait ) );
+
+        try {
+            if ( a.getString(R.styleable.Recognizer_recognizerTitleReady) != null )
+                elementButtonRecord.setReadyText(a.getString(R.styleable.Recognizer_recognizerTitleReady));
+
+            if ( a.getString(R.styleable.Recognizer_recognizerTitleWait) != null )
+                elementButtonRecord.setWaitText(a.getString(R.styleable.Recognizer_recognizerTitleWait));
+
+            if ( a.getInt(R.styleable.Recognizer_recognizerMicMarginBottom, -1) > -1 )
+                elementButtonRecord.setMicMarginBottom(a.getInt(R.styleable.Recognizer_recognizerMicMarginBottom, 1));
+
+            if ( a.getInt(R.styleable.Recognizer_recognizerMicMarginTop, -1) > -1 )
+                elementButtonRecord.setMicMarginTop(a.getInt(R.styleable.Recognizer_recognizerMicMarginTop, 1));
+
+            if ( a.getInt(R.styleable.Recognizer_recognizerMicTextSize, -1) > -1 )
+                elementButtonRecord.setTextSize(a.getInt(R.styleable.Recognizer_recognizerMicTextSize, 1));
+
+            if ( a.getInt(R.styleable.Recognizer_recognizerMicTextMarginBottom, -1) > -1 )
+                elementButtonRecord.setTextMarginBottom(a.getInt(R.styleable.Recognizer_recognizerMicTextMarginBottom, 1));
+
+        } finally {
+            a.recycle();
+        }
     }
 
     public void stop () {

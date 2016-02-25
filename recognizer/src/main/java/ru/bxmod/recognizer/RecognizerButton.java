@@ -27,6 +27,13 @@ public class RecognizerButton extends ImageButton {
 
     Handler handler;
 
+    private int micMarginBottom = 5;
+    private int micMarginTop = 10;
+    private int textMarginBottom = 10;
+    private int textSize = 20;
+    private String statusOffText = "";
+    private String statusWaitText = "";
+
     public RecognizerButton(final Context context) {
         super(context);
         init();
@@ -50,7 +57,7 @@ public class RecognizerButton extends ImageButton {
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.WHITE);
-        paint.setTextSize(20);
+        paint.setTextSize(textSize);
 
         bounds = new Rect();
 
@@ -85,12 +92,6 @@ public class RecognizerButton extends ImageButton {
                 break;
         }
     }
-
-    private int micMarginBottom = 5;
-    private int micMarginTop = 10;
-    private int textMarginBottom = 10;
-    private String statusOffText = "Записать";
-    private String statusWaitText = "ждите %d сек";
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -137,5 +138,27 @@ public class RecognizerButton extends ImageButton {
         sec = sec - ( min * 60 );
 
         return String.format("%02d", min) + ":" + String.format("%02d", sec);
+    }
+
+    public void setReadyText( String text ) {
+        statusOffText = text;
+    }
+    public void setWaitText( String text ) {
+        statusWaitText = text;
+    }
+    public void setMicMarginBottom( int margin ) {
+        micMarginBottom = margin;
+    }
+    public void setMicMarginTop( int margin ) {
+        micMarginTop = margin;
+    }
+    public void setTextMarginBottom( int margin ) {
+        textMarginBottom = margin;
+    }
+    public void setTextSize( int size ) {
+        textSize = size;
+        if ( paint != null ) {
+            paint.setTextSize(textSize);
+        }
     }
 }

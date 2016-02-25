@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="Recognizer">
-        <attr name="recognizerShowText" format="boolean" />
-        <attr name="recognizerLabelPosition" format="enum">
-            <enum name="left" value="0"/>
-            <enum name="right" value="1"/>
-        </attr>
+        <attr name="recognizerTitleReady" format="string" />
+        <attr name="recognizerTitleWait" format="string" />
+        <attr name="recognizerMicMarginBottom" format="integer" />
+        <attr name="recognizerMicMarginTop" format="integer" />
+        <attr name="recognizerMicTextSize" format="integer" />
+        <attr name="recognizerMicTextMarginBottom" format="integer" />
     </declare-styleable>
 </resources>
