@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Recognizer</string>
+    <string name="button_clear">Очистить</string>
+    <string name="button_record">Записать</string>
+</resources>
