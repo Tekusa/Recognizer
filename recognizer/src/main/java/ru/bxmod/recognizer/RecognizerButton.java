@@ -16,10 +16,8 @@ import android.widget.ImageButton;
  */
 public class RecognizerButton extends ImageButton {
 
-    // Используется в onDraw
     private Paint paint;
 
-    // Используется в onDraw для рассчета размеров текста
     private Rect bounds;
 
     private int status;
@@ -27,7 +25,6 @@ public class RecognizerButton extends ImageButton {
     private long startTime, waitTime;
     private Time controlTimer;
 
-    // Хендлер - обновление кнопки
     Handler handler;
 
     public RecognizerButton(final Context context) {
@@ -89,24 +86,15 @@ public class RecognizerButton extends ImageButton {
         }
     }
 
-    // TODO пробросить эти параметры от родительского View
-
-    // Нижний отступ микрофона от текста
     private int micMarginBottom = 5;
-    // Верхний отступ микрофона от края кнопки
     private int micMarginTop = 10;
-    // Нижний отступ текста от края кнопки
     private int textMarginBottom = 10;
-    // Текст статуса при выключенном распознавании
     private String statusOffText = "Записать";
-    // Текст статуса в режиме перезапуска из-за ошибки
     private String statusWaitText = "ждите %d сек";
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-        // TODO Рисуем волну
 
         Drawable d;
         String buttonText;
@@ -127,21 +115,14 @@ public class RecognizerButton extends ImageButton {
                 break;
         }
 
-        // Вычисляем размеры прямоугольника для рисования текста
         paint.getTextBounds(buttonText, 0, buttonText.length(), bounds);
-        // Вычисляем позицию текста по-горизонтали
         int textXPos = (int) ((canvas.getWidth() / 2) - ( ( paint.measureText(buttonText, 0, buttonText.length()) )  / 2));
-        // И рисуем текст
         canvas.drawText(buttonText, textXPos, canvas.getHeight() - textMarginBottom, paint);
 
-        // Рисуем на кнопке микрофончик
         int micMarginLeft;
         int micSize;
-        // Вычисляем размеры микрофона
         micSize = canvas.getHeight() - (micMarginTop + textMarginBottom + micMarginBottom + bounds.height());
-        // Вычисляем позицию для рисования
         micMarginLeft = Math.round( canvas.getWidth() / 2 ) - Math.round( micSize / 2 );
-        // И рисуем микрофон
         d.setBounds(micMarginLeft, micMarginTop, micSize + micMarginLeft, micSize + micMarginTop);
         d.draw(canvas);
     }

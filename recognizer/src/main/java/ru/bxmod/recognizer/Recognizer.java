@@ -38,19 +38,14 @@ public class Recognizer extends LinearLayout implements RecognitionListener {
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
 
-    // Текущий статус работы
     private String lastStatus = "off";
 
-    // Хендлер для лупера, проверяющего наличие текста в текстовом поле
     private Handler checkHandler;
 
-    // Флаг, нужен для переключения кнопки записи
     private boolean recordStatus = false;
 
-    // Флаг нажатия на кнопку записи. Необходим для контроля типа прекращения записи.
     private boolean isPressed = false;
 
-    // Подписчики на событие Apply
     public ArrayList<RecognizerListener> listeners = new ArrayList<RecognizerListener>();
 
     public Recognizer(Context context) {
@@ -70,12 +65,10 @@ public class Recognizer extends LinearLayout implements RecognitionListener {
         initializeViews(context);
     }
 
-    // Организация подписки на событие "Принять"
     public void setApplyListener(RecognizerListener listener){
         listeners.add(listener);
     }
 
-    // Получаем установленные для View в XML разметке атрибуты
     private void setViewAttributes ( Context context, AttributeSet attrs ) {
         TypedArray a = context.getTheme().obtainStyledAttributes( attrs, R.styleable.Recognizer, 0, 0);
 
@@ -137,13 +130,11 @@ public class Recognizer extends LinearLayout implements RecognitionListener {
         elementButtonSave.setEnabled(false);
         elementButtonClear.setEnabled(false);
 
-        // Событие клика на кнопке Apply
         elementButtonSave.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 stop();
 
-                // Отправка результата всем подписчикам
                 for (RecognizerListener listener:listeners){
                     listener.onRecognizerApply( elementEditText.getText().toString() );
                 }
@@ -203,23 +194,14 @@ public class Recognizer extends LinearLayout implements RecognitionListener {
         elementButtonRecord.setStatus(RecognizerConfig.STATUS_OFF);
     }
 
-    /**
-     * Очистить поле ввода
-     */
     public void clear() {
         elementEditText.setText("");
     }
 
-    /**
-     * Получить текст из поля ввода
-     */
     public String getText() {
         return elementEditText.getText().toString();
     }
 
-    /**
-     * Установить текст в поле ввода
-     */
     public void setText( String text ) {
         elementEditText.setText( text );
     }
